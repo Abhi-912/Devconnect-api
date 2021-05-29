@@ -1,0 +1,71 @@
+Mern stack project
+
+//RUn Command - npm run server
+.split method changes the string into a array
+
+CONFIG
+Using config we can create global values which we can use throughout the application.
+
+Step -1: Setting the mongodb atlas and then connect it with the server.js file. Mongodb link was pasted in default.json and was mongodb request was handled with db.js file. In db.js file for the connection mongoose package was used. Mongoose async await feature was used for the connection.To get the URI from the default.json file, config package was used.
+
+Step- 2: Writing the routes
+Routes were written for main function
+1. Users 2. Auth 3. Profile 4. Posts 
+
+Step - 3:
+In order to interact with our database we need to create the model for each of our resources.We are starting with user model for the rwgistration of users.
+To create the model we need to create the schema which holds the different fields we want to save in the database...basically a user will enter.
+
+Step-4 :- Now we have to register the user using the post request.We will use express validator to verify if the information the user is sending and true and if not true- send them a neat response.
+
+step -5:- Now after verifying data and we will start registering user data
+some of the steps.
+//see if the user exists
+//Get the user gravatar
+//Encrypt password
+//Return json token to immediately login them after registering
+
+-- To see if a unique user is registering we will extract user deatils like his name email and password from the  req.body and will use the method (findOne) to find the unique user.
+
+-- hash the password of the user bcrypt.
+
+////Implemeting the JWT user auth
+We want to return the json web token aso that users can authenticate themsleves and access the protective routes. The json web token we formally installed ... so first we need to sign it and then we pass our payload and then we can have our callback where we send the response to the client.Later we need to protect the routes that can verify the tokens.
+
+We can send back the tokens we recived after the callback response to access the protective routes. Now we will create the middleware that will verify the token we have received after the callback. For this we will create a nniddleware folder and create a middleware. We will decode the json web token ising jwt.verify and set req.user = decoded.user bby which we can access the profile of user from anywhere.
+The whole works through a middleware function.
+
+Upto this point we can register the user and get the web token....but now we have to login with the credentials in the database.So it's the authentication part...that wii go into routes/auth.js part.
+
+////////////////////////////////////////////////////PROFILE/////////////////////////////////////////////////////////////////////////
+
+
+Step -6 : Profile API Address
+We create the profile of the user. The link is api/profile/me. We will add auth to the get request to protect the route.
+Now we will find the profile route through Profile.findOne using the req.	user.id by using the Profile user refernece. We will populate it with the gravatar using the populate method. 
+
+Profile route we will create to update and create the profile.This is post route.Express validator is used.We will use the auth middleware and validation middleware. This will be done by the putting them in the bracket near the slash.To create the profile route we will pull the all links(like skills, social etc.) from req.body.(imp.).We also need to check sure that the user has added particular field like bio etc when we try to submit it to database. We intialise the profilefields to empty objects.We can get the user details from the mongoose schema id...like req.user.id.It will already know by the token we will be send.
+
+//Next topic- Routes to get all profiles and getting pdofiles by user id
+We got to fetch the profiles of all the users and the profile of a ones by user id. We created get routes for that.
+We use the find method to find the user and then populate it with user name and avataar.
+Eg:-const profile = await Profile.findOne({user: req.params.user_id}).populate('user', ['name', 'avatar']);
+
+-- req..params.user_Id fetches the user id from the link. we populated it with user details.
+
+///Deleteion of User and account
+We use findOneAndRemove to delete the user and account.
+
+//Education and Experiences 
+We will create the above two arrays. We will use put request. We delete them by delete middleware
+
+///Adding Github repos.
+Add the github client and github secret to default.json. We searched the user through the github username and used the github
+api provided by the github. we git the username through req.params.username and used the request module to call the response 
+and deal with errors.
+
+/////////////////////////////////////////////////////POSTS///////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
