@@ -1,3 +1,3 @@
 # Devconnect-api
 
-An Api for social media for developers.
+An REST Api for Devconnect(social media for developers)
